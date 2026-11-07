@@ -26,3 +26,4 @@ engine-harness/*.reg
 engine-harness/out_*.txt
 engine-harness/manifest*.txt
 engine-harness/m_*.txt
+build/
