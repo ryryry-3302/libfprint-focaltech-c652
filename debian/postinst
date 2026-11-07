@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+if [ "$1" = "configure" ] && [ -d /run/systemd/system ]; then
+    # fprintd is D-Bus activated: stopping it makes the next client load the new driver
+    systemctl stop fprintd.service >/dev/null 2>&1 || true
+fi
+#DEBHELPER#

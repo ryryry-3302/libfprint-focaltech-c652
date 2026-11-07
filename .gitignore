@@ -27,3 +27,11 @@ engine-harness/out_*.txt
 engine-harness/manifest*.txt
 engine-harness/m_*.txt
 build/
+# Debian build artifacts
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/*.substvars
+debian/*.debhelper.log
+debian/libfprint-2-tod1-focaltech-c652/
+obj-*/

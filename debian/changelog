@@ -1,0 +1,6 @@
+libfprint-2-tod1-focaltech-c652 (0.1.0) noble; urgency=medium
+
+  * Initial release: libfprint TOD driver for FocalTech 2808:c652 with
+    host-side SIFT/RANSAC matching, 40-touch enrolment and template updates.
+
+ -- Ryan Leong <rjleong2002@gmail.com>  Sun, 08 Nov 2026 00:59:45 +0800

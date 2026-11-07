@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+if [ "$1" = "purge" ]; then
+    rm -rf /var/lib/fprint/focaltech-c652      # learned touches
+fi
+if [ -d /run/systemd/system ]; then
+    systemctl stop fprintd.service >/dev/null 2>&1 || true
+fi
+#DEBHELPER#

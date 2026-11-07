@@ -16,6 +16,21 @@ supports this sensor out of the box.
 
 ## Install (Ubuntu 24.04)
 
+### From the .deb
+
+Download `libfprint-2-tod1-focaltech-c652_*_amd64.deb` from
+[Releases](https://github.com/ryryry-3302/libfprint-focaltech-c652/releases), then:
+
+```sh
+sudo apt install ./libfprint-2-tod1-focaltech-c652_*_amd64.deb
+fprintd-enroll -f right-index-finger     # 40 touches: move around your fingertip
+sudo pam-auth-update --enable fprintd    # fingerprint for login and sudo
+```
+
+Build the .deb yourself with `dpkg-buildpackage -us -uc -b` (the result goes in `..`).
+
+### From source
+
 ```sh
 git clone https://github.com/ryryry-3302/libfprint-focaltech-c652.git && cd libfprint-focaltech-c652
 ./scripts/install.sh                     # builds and installs the libfprint-TOD plugin

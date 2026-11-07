@@ -1,0 +1,23 @@
+Source: libfprint-2-tod1-focaltech-c652
+Section: libs
+Priority: optional
+Maintainer: Ryan Leong <rjleong2002@gmail.com>
+Build-Depends: debhelper-compat (= 13), meson, ninja-build, pkg-config,
+ libfprint-2-tod-dev, libfprint-2-dev, libgusb-dev, libopencv-dev
+Standards-Version: 4.6.2
+Homepage: https://github.com/ryryry-3302/libfprint-focaltech-c652
+Vcs-Git: https://github.com/ryryry-3302/libfprint-focaltech-c652.git
+Rules-Requires-Root: no
+
+Package: libfprint-2-tod1-focaltech-c652
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}, libfprint-2-tod1
+Recommends: fprintd, libpam-fprintd
+Description: open-source fingerprint driver for FocalTech 2808:c652 sensors
+ libfprint Touch OEM Driver (TOD) plugin for the FocalTech fingerprint sensor
+ with USB ID 2808:c652 (Holtek bridge), found in some recent laptops.
+ .
+ Matching runs on the host (SIFT features + RANSAC) and needs no proprietary
+ code. Enrolment takes 40 touches; touches that match confidently are learned
+ to improve acceptance over time. Works with fprintd for login, lock screen,
+ sudo and polkit prompts.
