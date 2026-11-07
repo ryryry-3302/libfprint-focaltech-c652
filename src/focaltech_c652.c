@@ -129,7 +129,7 @@ gallery_from_print (FpPrint *print)
   Gallery *g;
 
   g_object_get (print, "fpi-data", &v, NULL);
-  if (!v || !g_variant_is_of_type (v, G_VARIANT_TYPE ("(u@ay)")))
+  if (!v || !g_variant_is_of_type (v, G_VARIANT_TYPE ("(uay)")))
     return NULL;
   g_variant_get (v, "(u@ay)", &ver, &ay);
   if (ver != BLOB_VERSION)
