@@ -1,0 +1,25 @@
+# Proprietary vendor driver files: never commit (copyrighted)
+vendor/
+*.dll
+*.exe
+*.sys
+*.cat
+*.inf
+
+# Biometric data: captured fingerprints never leave this machine
+data/
+*.pgm
+*.raw
+*.npy
+*.npz
+bench/*.png
+
+# Build / runtime artifacts
+tools/probe
+tools/capture
+engine-harness/bin/
+engine-harness/prefix/
+engine-harness/*.reg
+
+# Local agent settings
+.claude/
