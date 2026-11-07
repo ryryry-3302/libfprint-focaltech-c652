@@ -11,7 +11,7 @@ tools/capture: tools/capture.c
 	$(CC) $(CFLAGS) $< -o $@ -lm $(USB)
 
 # Windows-side harness for the vendor matcher (needs mingw-w64 + wine)
-harness: engine-harness/bin/query.exe engine-harness/bin/init.exe
+harness: engine-harness/bin/query.exe engine-harness/bin/init.exe engine-harness/bin/oracle.exe
 engine-harness/bin/%.exe: engine-harness/%.c engine-harness/common.h
 	@mkdir -p engine-harness/bin
 	$(MINGW) -O1 -Wall -Wno-unused-function $< -o $@

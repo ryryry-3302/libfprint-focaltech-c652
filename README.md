@@ -11,7 +11,7 @@ supports this sensor out of the box.
 | USB protocol (status, image capture) | ✅ Documented in [docs/PROTOCOL.md](docs/PROTOCOL.md) |
 | Capture tools (`tools/`) | ✅ Working |
 | Open-source matcher (`bench/`) | ⚠️ About 55% genuine accept at 0/40 false accept. Not good enough yet |
-| Harness for the vendor matcher (`engine-harness/`) | 🚧 Loads under Wine, used as a reference oracle |
+| Vendor matcher under Wine (`engine-harness/`) | ✅ Reference oracle: 60% genuine at 0/40 false. See [docs/ENGINE.md](docs/ENGINE.md) |
 | libfprint driver | ⏳ Not started |
 
 ## Build

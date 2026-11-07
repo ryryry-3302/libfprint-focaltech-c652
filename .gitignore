@@ -23,3 +23,6 @@ engine-harness/*.reg
 
 # Local agent settings
 .claude/
+engine-harness/out_*.txt
+engine-harness/manifest*.txt
+engine-harness/m_*.txt
