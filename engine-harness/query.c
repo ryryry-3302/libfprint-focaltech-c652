@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /* query.c - load ftWbioEngineAdapter.dll and dump its WINBIO_ENGINE_INTERFACE. */
 #include <windows.h>
 #include <stdio.h>

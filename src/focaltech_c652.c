@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /*
  * libfprint TOD driver for the FocalTech fingerprint sensor, USB 2808:c652.
  *

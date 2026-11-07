@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /* common.h - minimal WinBio adapter definitions (from Microsoft's documented layout). */
 #include <windows.h>
 #include <stdio.h>

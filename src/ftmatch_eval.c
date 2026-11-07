@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /*
  * ftmatch_eval - check the C matcher against the Python bench on a local
  * dataset (data/dataset/<label>/NN.pgm).

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 // ftmatch.cpp - see ftmatch.h. Port of bench/match.py (prep + sift_score).
 #include "ftmatch.h"
 

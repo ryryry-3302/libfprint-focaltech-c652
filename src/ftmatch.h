@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /*
  * ftmatch - open-source fingerprint matcher for small (64x80) capacitive
  * sensors such as the FocalTech 2808:c652.

@@ -1,5 +1,6 @@
 project('libfprint-focaltech-c652', ['c', 'cpp'],
   version: '0.1.0',
+  license: 'LGPL-2.1-or-later',
   default_options: ['warning_level=2', 'cpp_std=c++17', 'buildtype=release'])
 
 tod    = dependency('libfprint-2-tod-1')

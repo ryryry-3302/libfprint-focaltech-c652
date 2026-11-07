@@ -17,7 +17,7 @@ supports this sensor out of the box.
 ## Install (Ubuntu 24.04)
 
 ```sh
-git clone <this repo> && cd <repo>
+git clone https://github.com/ryryry-3302/libfprint-focaltech-c652.git && cd libfprint-focaltech-c652
 ./scripts/install.sh                     # builds and installs the libfprint-TOD plugin
 fprintd-enroll -f right-index-finger     # 40 touches: move around your fingertip
 fprintd-verify
@@ -91,6 +91,10 @@ distributed here.** Supply your own copy of the Windows driver package in
 make harness
 python3 engine-harness/make_reg.py vendor/FtWbioDriverUmdfV3.inf engine-harness/focal.reg
 ```
+
+## License
+
+LGPL-2.1-or-later (see [LICENSE](LICENSE)), the same as libfprint.
 
 ## Disclaimer
 

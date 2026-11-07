@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /*
  * capture.c - collect a fingerprint dataset from a FocalTech 2808:c652 sensor.
  *

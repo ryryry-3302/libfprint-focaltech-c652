@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /*
  * fptest - exercise the driver through the public libfprint API,
  * without fprintd (useful before installing).

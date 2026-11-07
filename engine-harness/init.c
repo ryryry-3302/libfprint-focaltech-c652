@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 #include "common.h"
 STUBS(sensor) STUBS(storage)
 typedef HRESULT (WINAPI *FN1)(WB_PIPELINE *);

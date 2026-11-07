@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /*
  * probe.c - check whether a FocalTech 2808:c652 sensor speaks the FT9362
  * protocol used by the open-source shokerplz/ft9362-driver (2808:0752).

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /*
  * oracle.c - run the vendor WinBio engine adapter as a black-box reference
  * matcher on captured 64x80 images (run under Wine).
