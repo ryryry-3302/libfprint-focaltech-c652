@@ -1,3 +1,13 @@
+libfprint-2-tod1-focaltech-c652 (0.1.1) noble; urgency=medium
+
+  * Reduce capture release debounce from 400 ms to 50 ms and remove shared
+    mutable state.
+  * Reject short command writes and invalid status frames.
+  * Tune SIFT feature extraction (contrastThreshold=0.01, edgeThreshold=20)
+    and make SIFT/BFMatcher thread-local.
+
+ -- Ryan Leong <rjleong2002@gmail.com>  Fri, 27 Nov 2026 17:56:00 +0800
+
 libfprint-2-tod1-focaltech-c652 (0.1.0) noble; urgency=medium
 
   * Initial release: libfprint TOD driver for FocalTech 2808:c652 with
