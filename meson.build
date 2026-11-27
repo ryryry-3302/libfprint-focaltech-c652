@@ -26,3 +26,8 @@ shared_module('fprint-2-tod-focaltech-c652', 'src/focaltech_c652.c',
 # Development tools (not installed)
 executable('ftmatch_eval', 'src/ftmatch_eval.c', link_with: ftmatch, dependencies: [opencv, m])
 executable('fptest', 'tools/fptest.c', dependencies: fprint)
+executable('accuracy_eval', 'tools/accuracy_eval.cpp', include_directories: include_directories('src'),
+  link_with: ftmatch, dependencies: [opencv, m])
+protocol_test = executable('protocol_test', 'tools/protocol_test.c', link_with: ftmatch,
+  dependencies: [tod, fprint, gusb, opencv, m], c_args: ['-Wno-unused-parameter'])
+test('capture-protocol', protocol_test)

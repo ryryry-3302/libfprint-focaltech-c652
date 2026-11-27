@@ -33,6 +33,8 @@
 #define DUPLICATE_INLIERS  45     /* enrol touch nearly identical to previous one */
 #define MIN_FEATURES       15
 #define BLOB_VERSION       1
+#define RELEASE_READINGS   3
+#define RELEASE_POLL_US    25000
 
 static const guint8 cmd_status[]  = { 0x02, 0x00, 0x03, 0x80, 0x02, 0x01, 0x80 };
 static const guint8 cmd_capture[] = { 0x02, 0x00, 0x01, 0x81, 0x80 };
@@ -194,6 +196,11 @@ request (GUsbDevice *usb, const guint8 *cmd, gsize cmd_len, guint8 *buf, gsize s
 
   if (!g_usb_device_bulk_transfer (usb, EP_OUT, (guint8 *) cmd, cmd_len, &n, 1000, c, error))
     return FALSE;
+  if (n != cmd_len)
+    {
+      g_set_error_literal (error, FP_DEVICE_ERROR, FP_DEVICE_ERROR_PROTO, "short command write");
+      return FALSE;
+    }
   while (total < size)
     {
       if (!g_usb_device_bulk_transfer (usb, EP_IN, buf + total, size - total, &n, 2000, c, error))
@@ -214,10 +221,10 @@ frame_ok (const guint8 *b, gsize n)
   gsize len;
   guint8 x = 0;
 
-  if (n < 5 || b[0] != 0x02)
+  if (n < 6 || b[0] != 0x02)
     return FALSE;
   len = (b[1] << 8) | b[2];
-  if (n < 3 + len + 1)
+  if (len < 2 || n != 3 + len + 1)
     return FALSE;
   for (gsize i = 1; i < 3 + len; i++)
     x ^= b[i];
@@ -233,26 +240,34 @@ finger_state (GUsbDevice *usb, GCancellable *c, GError **error)
 
   if (!request (usb, cmd_status, sizeof cmd_status, b, sizeof b, &n, c, error))
     return -1;
-  return frame_ok (b, n) ? b[4] == 1 : 0;
+  if (!frame_ok (b, n) || n != 6 || b[4] > 1)
+    {
+      g_set_error_literal (error, FP_DEVICE_ERROR, FP_DEVICE_ERROR_PROTO, "invalid finger status frame");
+      return -1;
+    }
+  return b[4] == 1;
 }
 
 /* Wait for a finger to be lifted, then placed, then read one image. */
 static gboolean
 capture_touch (GUsbDevice *usb, guint16 *px, GCancellable *c, GError **error)
 {
-  static guint8 frame[FRAME_LEN + 64];
+  guint8 frame[FRAME_LEN + 64];
   int stable = 0, f;
   gsize n;
 
   /* the firmware latches "finger" until the stored scan is read: discard it */
-  while (stable < 8)
+  /* Clear any latched scan, then debounce a real lift. The old 400 ms
+   * interval discarded a new touch made while the UI already requested it. */
+  while (stable < RELEASE_READINGS)
     {
       if ((f = finger_state (usb, c, error)) < 0)
         return FALSE;
       if (f == 1 && !request (usb, cmd_capture, sizeof cmd_capture, frame, sizeof frame, &n, c, error))
         return FALSE;
       stable = f == 0 ? stable + 1 : 0;
-      g_usleep (50000);
+      if (stable < RELEASE_READINGS)
+        g_usleep (RELEASE_POLL_US);
     }
   for (stable = 0; stable < 2; )
     {
