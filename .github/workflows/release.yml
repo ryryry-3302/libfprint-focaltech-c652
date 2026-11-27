@@ -1,0 +1,82 @@
+name: Release & PPA
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v0.1.1)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            meson ninja-build pkg-config \
+            libfprint-2-tod-dev libfprint-2-dev libgusb-dev libopencv-dev \
+            debhelper devscripts dpkg-dev
+
+      - name: Build and run tests
+        run: |
+          meson setup build --buildtype=release
+          meson compile -C build
+          meson test -C build --print-errorlogs
+
+      - name: Build .deb package
+        run: |
+          dpkg-buildpackage -us -uc -b
+          mkdir -p dist
+          mv ../*.deb dist/
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag || github.ref_name }}
+          generate_release_notes: true
+          files: dist/*.deb
+
+  ppa-upload:
+    needs: build-and-release
+    runs-on: ubuntu-24.04
+    if: vars.PPA_TARGET != ''
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install packaging tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            debhelper devscripts dput gnupg \
+            meson ninja-build pkg-config \
+            libfprint-2-tod-dev libfprint-2-dev libgusb-dev libopencv-dev
+
+      - name: Import GPG key
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+          KEY_ID=$(gpg --list-secret-keys --with-colons | awk -F: '/^sec/{print $5; exit}')
+          echo "GPG_KEY_ID=$KEY_ID" >> "$GITHUB_ENV"
+
+      - name: Build and upload source package to PPA
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: |
+          if [ -n "$GPG_PASSPHRASE" ]; then
+            debuild -S -sa -k"$GPG_KEY_ID" -p"gpg --batch --yes --pinentry-mode loopback --passphrase-env GPG_PASSPHRASE"
+          else
+            debuild -S -sa -k"$GPG_KEY_ID" -p"gpg --batch --yes"
+          fi
+          dput "${{ vars.PPA_TARGET }}" ../*.changes
