@@ -75,7 +75,7 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
           if [ -n "$GPG_PASSPHRASE" ]; then
-            debuild -S -sa -k"$GPG_KEY_ID" -p"gpg --batch --yes --pinentry-mode loopback --passphrase-env GPG_PASSPHRASE"
+            debuild -S -sa -k"$GPG_KEY_ID" -p"gpg --batch --yes --pinentry-mode loopback --passphrase $GPG_PASSPHRASE"
           else
             debuild -S -sa -k"$GPG_KEY_ID" -p"gpg --batch --yes"
           fi
