@@ -23,7 +23,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            meson ninja-build pkg-config \
+            build-essential meson ninja-build pkg-config \
             libfprint-2-tod-dev libfprint-2-dev libgusb-dev libopencv-dev \
             debhelper devscripts dpkg-dev
 
@@ -57,7 +57,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            debhelper devscripts dput gnupg \
+            build-essential debhelper devscripts dput gnupg \
             meson ninja-build pkg-config \
             libfprint-2-tod-dev libfprint-2-dev libgusb-dev libopencv-dev
 
